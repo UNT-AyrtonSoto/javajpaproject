@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="index">
+<head>
+  <meta charset="UTF-8">
+  <title>Venta</title>
+</head>
+<body>
+<div layout:fragment="header">
+  <h1>Registrar Venta</h1>
+</div>
+<div layout:fragment="buttons">
+
+</div>
+<div layout:fragment="content">
+  <div class="row">
+    <div class="col-12">
+      <form th:action="@{/sales/save}" th:object="${sale}" method="post" class="form-horizontal">
+        <div>
+          <h2>Información Venta</h2>
+        </div>
+        <div class="row">
+        <div class="col-6">
+          <div>
+            <label for="cboClient">Cliente</label>
+            <select id="cboClient" name="dniClient" class="form-control form-select">
+              <option value="-1">Seleccionar...</option>
+              <option th:each="client:${listClients}" th:value="${client.dni}" th:utext="${client.toString()}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="col-6">
+          <div>
+            <label for="cboSeller">Vendedor</label>
+            <select id="cboSeller" name="dniSeller" class="form-control form-select">
+              <option value="-1">Seleccionar...</option>
+              <option th:each="seller:${listSellers}" th:value="${seller.dni}" th:utext="${seller.toString()}"></option>
+            </select>
+          </div>
+        </div>
+      </div>
+        <hr class="w-100">
+        <div>
+          <h5>Registro de productos</h5>
+        </div>
+        <div class="row align-center">
+          <div class="col-6">
+            <div>
+              <label for="cboProduct">Producto</label>
+              <select id="cboProduct" name="productcbo" class="form-control form-select">
+                <option value="-1">Seleccionar...</option>
+                <option th:each="product:${listProducts}" onchange="handleProduct(event)" th:value="${product.name+'+'+product.price+'+'+product.stock}" th:utext="${product.name}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="offset-3 col-3">
+            <a class="btn btn-secondary" onclick="addProduct(event)">Agregar</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-block btn-primary" type="submit">GUARDAR</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <td>Acciones</td>
+                  <td>Producto</td>
+                  <td>Cantidad</td>
+                  <td>Precio</td>
+                  <td class="txtTotal">Total</td>
+                </tr>
+              </thead>
+              <tbody id="cuerpoTabla">
+                <tr th:each="detail:${sale.items}" varStatus="s" class="produc-row">
+                  <td>
+                    <a onclick="deleteProduct(event, product.name)" class="btn btn-danger btn-sm deleteBtn">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  </td>
+                  <td th:text="${detail.product.name}">
+                    <input style="border:none" readonly type="text" name="product[]" class="txtProduct">
+                  </td>
+                  <td th:text="${detail.quantity}">
+                    <input type="number" name="quantity[]" onchange="updateSubTotal(event)" class="intQuantity form-control">
+                  </td>
+                  <td th:text="${detail.product.price}" class="txtPrice"></td>
+                  <td class="txtTotal" th:text="${detail.quantity*detail.product.price}"></td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td colspan="3"></td>
+                  <td>Total</td>
+                  <td id="totalSale" th:if="${size}" th:text="${sale.getTotal()}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<th:block layout:fragment="script">
+  <script >
+    var currProduct;
+    var tableBody = document.getElementById("cuerpoTabla");
+    var arrProducts = [];
+
+    var cboProducto = document.getElementById("cboProduct")
+
+    function handleProduct(ev){
+      console.log(ev)
+    }
+
+    function addProduct(ev){
+      console.log(ev)
+      console.log(cboProducto.value)
+
+      let t_product = cboProducto.value.split('+');
+      let t_pName = t_product[0];
+      let t_pPrice = t_product[1];
+      let t_pStock = t_product[2];
+      let template = `
+    <td>
+      <a onclick="deleteProduct(event, ${t_pName})" class="btn btn-danger btn-sm deleteBtn">
+        <i class="fa fa-trash"></i>
+      </a>
+    </td>
+    <td>
+      <input style="border:none" readonly type="text" value="${t_pName}" name="product[]" class="txtProduct">
+    </td>
+    <td>
+      <input type="number" name="quantity[]" class="form-control" max="${t_pStock}" value="0" onchange="updateSubTotal(event)" class="intQuantity">
+    </td>
+    <td class="txtPrice">${t_pPrice}</td>
+    <td class="txtTotal">0</td>
+`;
+      const template_row = document.createElement('tr');
+      template_row.innerHTML = template;
+      console.log(template_row.innerHTML);
+      tableBody.appendChild(template_row);
+    }
+
+    function updateSubTotal(ev){
+      console.log(ev);
+      const row = ev.target.parentElement.parentElement;
+      console.log(row);
+      const total= row.querySelector('.txtTotal');
+      const price= parseFloat(row.querySelector('.txtPrice').innerText);
+      console.log(ev.target.value,price)
+      total.innerText = ev.target.value * price ;
+    }
+
+    function deleteProduct(ev, productName=null){
+      console.log(ev)
+    }
+  </script>
+</th:block>
+</body>
+</html>

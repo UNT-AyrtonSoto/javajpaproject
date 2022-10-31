@@ -50,4 +50,8 @@ public class Sale_Detail {
         this.product = product;
         this.quantity = quantity;
     }
+
+    public double getTotal(){
+        return this.quantity*this.product.getPrice();
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 @Entity
 @Table(name = "Sale")
@@ -17,6 +18,7 @@ public class Sale {
     @Getter@Setter
     private Long id;
 
+    @Getter@Setter
     private Date saleDate;
 
     @ManyToOne
@@ -30,6 +32,7 @@ public class Sale {
     private Client client;
 
     @OneToMany(mappedBy = "sale")
+    @Getter@Setter
     private Collection<Sale_Detail> items;
 
     public Sale(Date saleDate, Seller seller, Client client) {
@@ -51,6 +54,20 @@ public class Sale {
         this.seller = seller;
         this.client = client;
         this.items = items;
+    }
+
+    public Sale() {
+
+    }
+
+    public double getTotal(){
+        double sum = 0;
+        Iterator<Sale_Detail> iterator = items.iterator();
+        while (iterator.hasNext()){
+            Sale_Detail curr = iterator.next();
+            sum += curr.getTotal();
+        }
+        return sum;
     }
 }
 

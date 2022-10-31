@@ -94,8 +94,8 @@ public class SetupData implements ApplicationListener<ContextRefreshedEvent> {
     Seller createSellerIfNotFound(SellerRegistrationDto registrationDto){
         Seller seller = sellerRepository.findByDni(registrationDto.getDni());
         if (seller == null) {
+            seller = sellerService.save(registrationDto);
         }
-        seller = sellerService.save(registrationDto);
         return seller;
     }
 
@@ -103,8 +103,8 @@ public class SetupData implements ApplicationListener<ContextRefreshedEvent> {
     Client createClientIfNotFound(ClientRegistrationDto registrationDto){
         Client client = clientRepository.findByDni(registrationDto.getDni());
         if(client == null){
+            client = clientService.save(registrationDto);
         }
-        client = clientService.save(registrationDto);
         return client;
     }
 

@@ -7,9 +7,13 @@ import lombok.Setter;
 
 public class SaleDetailRegistrationDto {
 
+    @Getter@Setter
     private Sale sale;
 
+    @Getter@Setter
     private Product product;
+
+    @Getter@Setter
     private int quantity;
 
     public SaleDetailRegistrationDto() {

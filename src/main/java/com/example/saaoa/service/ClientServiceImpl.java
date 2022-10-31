@@ -16,15 +16,15 @@ public class ClientServiceImpl implements IClientService{
 
     public Client save(ClientRegistrationDto registrationDto){
         Client client = null;
-        //if(clientRepository.findByDni(registrationDto.getDni())==null){
+        if(clientRepository.findByDni(registrationDto.getDni())==null){
             client = new Client(
                     registrationDto.getDni(),
                     registrationDto.getFirstName(),
                     registrationDto.getLastName(),
                     registrationDto.getEmail()
             );
-        //}
-        return client;
+        }
+        return clientRepository.save(client);
     }
 
     public Client findByDni(String dni){

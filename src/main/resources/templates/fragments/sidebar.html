@@ -4,7 +4,7 @@
     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
         <!--begin::Logo-->
         <a th:href="@{/}">
-            <img alt="Logo" src="dist/assets/media/logos/logo-1-dark.svg" class="h-25px logo" />
+            <img alt="Logo" src="/dist/assets/media/logos/logo-1-dark.svg" class="h-25px logo" />
         </a>
         <!--end::Logo-->
         <!--begin::Aside toggler-->
@@ -110,7 +110,7 @@
 					</a>
 				</div>
                 <div class="menu-item">
-                    <a class="menu-link" th:href="@{/}" sec:authorize="isAuthenticated() && hasAnyRole('ROLE_ADMIN','ROLE_USER')" >
+                    <a class="menu-link" th:href="@{/sales/}" sec:authorize="isAuthenticated() && hasAnyRole('ROLE_ADMIN','ROLE_USER')" >
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotune/communication/com001.svg-->
 											<span class="svg-icon svg-icon-2">
@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="dist/documentation/getting-started/changelog.html">
+                    <a class="menu-link" href="/dist/documentation/getting-started/changelog.html">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotune/coding/cod003.svg-->
 											<span class="svg-icon svg-icon-2">
@@ -154,7 +154,7 @@
     <!--end::Aside menu-->
     <!--begin::Footer-->
     <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
-        <a href="dist/documentation/getting-started.html" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
+        <a href="/dist/documentation/getting-started.html" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
             <span class="btn-label">Docs &amp; Components</span>
             <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
             <span class="svg-icon btn-icon svg-icon-2">

@@ -12,7 +12,7 @@ public class Seller {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Seller_id")
+    @Column(name = "seller_id")
     @Getter@Setter
     private Long id;
 

@@ -1,7 +1,6 @@
 package com.example.saaoa.service;
 
 import com.example.saaoa.dto.SaleRegistrationDto;
-import com.example.saaoa.model.Product;
 import com.example.saaoa.model.Sale;
 import com.example.saaoa.model.Sale_Detail;
 import com.example.saaoa.repository.IClientRepository;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SaleServiceImpl implements ISaleService{
@@ -32,7 +32,7 @@ public class SaleServiceImpl implements ISaleService{
                 registrationDto.getSeller(),
                 registrationDto.getClient()
         );
-        return sale;
+        return saleRepository.save(sale);
     }
 
     @Override
@@ -43,9 +43,10 @@ public class SaleServiceImpl implements ISaleService{
                 registrationDto.getClient(),
                 sale_details
         );
-        return sale;
+        return saleRepository.save(sale);
     }
 
+    public Optional<Sale> getById(Long id){return saleRepository.findById(id);}
 
     public List<Sale> listAll(){return saleRepository.findAll();}
 }

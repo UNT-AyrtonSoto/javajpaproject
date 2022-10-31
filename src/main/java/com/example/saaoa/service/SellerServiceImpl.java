@@ -16,14 +16,14 @@ public class SellerServiceImpl implements ISellerService{
 
     public Seller save(SellerRegistrationDto registrationDto){
         Seller seller = null;
-        //if(sellerRepository.findByDni(registrationDto.getDni())==null){
+        if(sellerRepository.findByDni(registrationDto.getDni())==null){
             seller = new Seller(
                     registrationDto.getDni(),
                     registrationDto.getFirstName(),
                     registrationDto.getLastName(),
                     registrationDto.getEmail());
-        //}
-        return seller;
+        }
+        return sellerRepository.save(seller);
     }
 
     public Seller findByDni(String dni){
