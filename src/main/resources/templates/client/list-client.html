@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="index">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+  <div layout:fragment="header">Clientes</div>
+  <div layout:fragment="content">
+      <div class="row">
+          <div class="col-12">
+              <table class="table table-bordered table-striped dataTable" role="grid">
+                  <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Activo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr th:each="client: ${listClients}">
+                          <td th:text="${client.dni}"></td>
+                          <td th:text="${client.firstName}"></td>
+                          <td th:text="${client.lastName}"></td>
+                          <td th:text="${client.email}"></td>
+                          <td th:text="${client.active}"></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</body>
+</html>

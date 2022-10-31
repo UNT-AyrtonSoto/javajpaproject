@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "seller", uniqueConstraints = @UniqueConstraint(columnNames = {"dni","email"}))
+@Table(name = "seller")
 public class Seller {
 
     @Id
@@ -16,14 +16,24 @@ public class Seller {
     @Getter@Setter
     private Long id;
 
+    @Column(name = "dni")
+    @Getter@Setter
     private String dni;
 
+    @Column(name = "first_name")
+    @Getter@Setter
     private String firstName;
 
+    @Column(name = "last_name")
+    @Getter@Setter
     private String lastName;
 
+    @Column(name = "email")
+    @Getter@Setter
     private String email;
 
+    @Column(name = "active")
+    @Getter@Setter
     private boolean active;
 
     @OneToMany(mappedBy = "seller")

@@ -50,6 +50,7 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public User findByUsername(String username) {
+
         return userRepository.findByEmail(username);
     }
 

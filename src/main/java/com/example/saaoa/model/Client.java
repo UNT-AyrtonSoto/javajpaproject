@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "client", uniqueConstraints = @UniqueConstraint(columnNames = {"dni","email"}))
+@Table(name = "client")
 public class Client {
 
     @Id
@@ -40,15 +40,17 @@ public class Client {
     @Getter@Setter
     private Collection<Sale> purchases;
 
-    public Client(String firstName, String lastName, String email){
+    public Client(String dni, String firstName, String lastName, String email){
+        this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.active = true;
     }
 
-    public Client(Long id, String firstName, String lastName, String email, boolean active) {
+    public Client(Long id, String dni, String firstName, String lastName, String email, boolean active) {
         this.id = id;
+        this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
