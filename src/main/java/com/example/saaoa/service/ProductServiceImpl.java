@@ -1,6 +1,7 @@
 package com.example.saaoa.service;
 
 import com.example.saaoa.dto.ProductRegistrationDto;
+import com.example.saaoa.model.Client;
 import com.example.saaoa.model.Product;
 import com.example.saaoa.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,11 @@ public class ProductServiceImpl implements IProductService{
     }
 
     public List<Product> listAll(){return productRepository.findAll();}
+
+    public void delete(Long id){
+        productRepository.deleteById(id);
+    }
+    public void delete(Product product){
+        productRepository.delete(product);
+    }
 }

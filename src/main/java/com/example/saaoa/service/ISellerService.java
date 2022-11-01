@@ -12,4 +12,7 @@ public interface ISellerService {
     Seller findByDni(String dni);
 
     List<Seller> listAll();
+
+    void delete(Long id);
+    void delete(Seller seller);
 }

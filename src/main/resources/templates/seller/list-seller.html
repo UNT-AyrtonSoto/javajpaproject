@@ -8,30 +8,41 @@
     <title>Vendedores</title>
 </head>
 <body>
-  <div layout:fragment="header">Vendedores</div>
+  <div layout:fragment="header">
+      <h1>Vendedores</h1>
+  </div>
+  <div layout:fragment="buttons">
+  </div>
   <div layout:fragment="content">
       <div class="row">
           <div class="col-12">
-              <table class="table table-bordered table-striped dataTable" role="grid">
-                  <thead>
-                    <tr>
-                        <th>DNI</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Correo</th>
-                        <th>Activo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr th:each="seller: ${listSellers}">
-                          <td th:text="${seller.dni}"></td>
-                          <td th:text="${seller.firstName}"></td>
-                          <td th:text="${seller.lastName}"></td>
-                          <td th:text="${seller.email}"></td>
-                          <td th:text="${seller.active}"></td>
-                      </tr>
-                  </tbody>
-              </table>
+              <h3>LISTADO DE VENEDORES</h3>
+          </div>
+          <div class="col-12">
+              <div class="row">
+                  <div class="col-12 px-8">
+                      <table class="table table-bordered table-striped dataTable" role="grid">
+                          <thead>
+                          <tr>
+                              <th>DNI</th>
+                              <th>Nombre</th>
+                              <th>Apellido</th>
+                              <th>Correo</th>
+                              <th>Activo</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr th:each="seller: ${listSellers}">
+                              <td th:text="${seller.dni}"></td>
+                              <td th:text="${seller.firstName}"></td>
+                              <td th:text="${seller.lastName}"></td>
+                              <td th:text="${seller.email}"></td>
+                              <td th:text="${seller.active}"></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
           </div>
       </div>
   </div>

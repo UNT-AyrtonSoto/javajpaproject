@@ -23,11 +23,13 @@
         </div>
         <div class="row">
         <div class="col-6">
+            <input hidden type="text" name="idSale" th:if="${size}" th:value="${sale.id}">
+            <input hidden type="text" name="idSale" th:if="${!size}" th:value="${0}">
           <div>
             <label for="cboClient">Cliente</label>
             <select id="cboClient" name="dniClient" class="form-control form-select">
               <option value="-1">Seleccionar...</option>
-              <option th:each="client:${listClients}" th:value="${client.dni}" th:utext="${client.toString()}"></option>
+              <option th:each="client:${listClients}" th:value="${client.dni}" th:utext="${client.toString()}" th:selected="${client.dni==sale?.client?.dni}"></option>
             </select>
           </div>
         </div>
@@ -36,7 +38,7 @@
             <label for="cboSeller">Vendedor</label>
             <select id="cboSeller" name="dniSeller" class="form-control form-select">
               <option value="-1">Seleccionar...</option>
-              <option th:each="seller:${listSellers}" th:value="${seller.dni}" th:utext="${seller.toString()}"></option>
+              <option th:each="seller:${listSellers}" th:value="${seller.dni}" th:utext="${seller.toString()}" th:selected="${seller.dni==sale?.seller?.dni}"></option>
             </select>
           </div>
         </div>
@@ -60,8 +62,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">
-            <button class="btn btn-block btn-primary" type="submit">GUARDAR</button>
+          <div class="col-12 py-3">
+            <button class="btn btn-block btn-primary w-100" type="submit">GUARDAR</button>
           </div>
         </div>
         <div class="row">
@@ -73,21 +75,24 @@
                   <td>Producto</td>
                   <td>Cantidad</td>
                   <td>Precio</td>
-                  <td class="txtTotal">Total</td>
+                  <td>Total</td>
                 </tr>
               </thead>
               <tbody id="cuerpoTabla">
-                <tr th:each="detail:${sale.items}" varStatus="s" class="produc-row">
+                <tr th:each="detail:${sale.getItems()}" varStatus="s" class="produc-row">
                   <td>
-                    <a onclick="deleteProduct(event, product.name)" class="btn btn-danger btn-sm deleteBtn">
+                    <a onclick="deleteProduct(event)" class="btn btn-danger btn-sm deleteBtn">
                       <i class="fa fa-trash"></i>
                     </a>
                   </td>
-                  <td th:text="${detail.product.name}">
-                    <input style="border:none" readonly type="text" name="product[]" class="txtProduct">
+                  <td>
+                    <input style="border:none" th:value="${detail.product.name}" readonly type="text" name="product[]" class="txtProduct">
                   </td>
-                  <td th:text="${detail.quantity}">
-                    <input type="number" name="quantity[]" onchange="updateSubTotal(event)" class="intQuantity form-control">
+                  <td>
+                    <input min="0" type="number" name="quantity[]" onchange="updateSubTotal(event)" class="intQuantity form-control" th:value="${detail.quantity}">
+                  </td>
+                  <td class="d-none">
+                    <input hidden type="text" name="exists[]" th:value="${detail.id}">
                   </td>
                   <td th:text="${detail.product.price}" class="txtPrice"></td>
                   <td class="txtTotal" th:text="${detail.quantity*detail.product.price}"></td>
@@ -97,7 +102,9 @@
                 <tr>
                   <td colspan="3"></td>
                   <td>Total</td>
-                  <td id="totalSale" th:if="${size}" th:text="${sale.getTotal()}"></td>
+                  <td id="totalSale">
+                    <span th:if="${size}" th:text="${sale.getTotal()}"></span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -112,6 +119,8 @@
     var currProduct;
     var tableBody = document.getElementById("cuerpoTabla");
     var arrProducts = [];
+
+    var txtTotalSale = document.getElementById("totalSale");
 
     var cboProducto = document.getElementById("cboProduct")
 
@@ -129,7 +138,7 @@
       let t_pStock = t_product[2];
       let template = `
     <td>
-      <a onclick="deleteProduct(event, ${t_pName})" class="btn btn-danger btn-sm deleteBtn">
+      <a onclick="deleteProduct(event)" class="btn btn-danger btn-sm deleteBtn">
         <i class="fa fa-trash"></i>
       </a>
     </td>
@@ -137,7 +146,10 @@
       <input style="border:none" readonly type="text" value="${t_pName}" name="product[]" class="txtProduct">
     </td>
     <td>
-      <input type="number" name="quantity[]" class="form-control" max="${t_pStock}" value="0" onchange="updateSubTotal(event)" class="intQuantity">
+      <input min="0" type="number" name="quantity[]" class="form-control" max="${t_pStock}" value="0" onchange="updateSubTotal(event)" class="intQuantity">
+    </td>
+    <td class="d-none">
+      <input hidden type="text" name="exists[]" value="0">
     </td>
     <td class="txtPrice">${t_pPrice}</td>
     <td class="txtTotal">0</td>
@@ -155,11 +167,24 @@
       const total= row.querySelector('.txtTotal');
       const price= parseFloat(row.querySelector('.txtPrice').innerText);
       console.log(ev.target.value,price)
-      total.innerText = ev.target.value * price ;
+      let subTotal = ev.target.value * price
+      total.innerText =  subTotal;
+      updateTotal();
     }
 
-    function deleteProduct(ev, productName=null){
-      console.log(ev)
+    function updateTotal(){
+      let totales = document.querySelectorAll(".txtTotal");
+      let sum = 0;
+      for(let total of totales){
+        sum+= parseFloat(total.innerText)
+      }
+      txtTotalSale.innerText = sum.toString();
+    }
+
+    function deleteProduct(ev){
+      console.log(ev.target.closest('tr'))
+      tableBody.removeChild(ev.target.closest('tr'))
+      updateTotal()
     }
   </script>
 </th:block>

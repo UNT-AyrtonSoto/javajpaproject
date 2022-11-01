@@ -12,4 +12,7 @@ public interface IProductService {
     Product findByName(String name);
 
     List<Product> listAll();
+
+    public void delete(Long id);
+    public void delete(Product product);
 }

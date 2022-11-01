@@ -8,31 +8,49 @@
     <title>Ventas</title>
 </head>
 <body>
-  <div layout:fragment="header">Ventas</div>
+  <div layout:fragment="header">
+      <h1>Ventas</h1>
+  </div>
   <div layout:fragment="buttons">
       <a th:href="@{/sales/add}" class="btn btn-sm btn-primary" id="kt_toolbar_primary_button">Registrar</a>
   </div>
   <div layout:fragment="content">
       <div class="row">
           <div class="col-12">
-              <table class="table table-bordered table-striped dataTable" role="grid">
-                  <thead>
-                    <tr>
-                        <th>Vendedor</th>
-                        <th>Cliente</th>
-                        <th>Fecha</th>
-                        <th>Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr th:each="sale: ${listSales}">
-                          <td th:text="${sale.seller.toString()}"></td>
-                          <td th:text="${sale.client.toString()}"></td>
-                          <td th:text="${sale.saleDate}"></td>
-                          <td th:text="${product.getTotal()}"></td>
-                      </tr>
-                  </tbody>
-              </table>
+              <h3>LISTADO VENTAS</h3>
+          </div>
+          <div class="col-12">
+              <div class="row">
+                  <div class="col-12 px-8">
+                      <table class="table table-bordered table-striped dataTable" role="grid">
+                          <thead>
+                          <tr>
+                              <th>Action</th>
+                              <th>Vendedor</th>
+                              <th>Cliente</th>
+                              <th>Fecha</th>
+                              <th>Total</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr th:each="sale: ${listSales}">
+                              <td>
+                                  <a class="btn btn-sm btn-primary mr-2" th:href="@{/sales/edit/{id}(id=${sale.id})}">
+                                      <i class="fa fa-pen"></i>
+                                  </a>
+                                  <a class="btn btn-sm btn-danger" th:href="@{/sales/delete/{id}(id=${sale.id})}">
+                                      <i class="fa fa-trash"></i>
+                                  </a>
+                              </td>
+                              <td th:text="${sale.seller.toString()}"></td>
+                              <td th:text="${sale.client.toString()}"></td>
+                              <td th:text="${sale.saleDate}"></td>
+                              <td th:text="${sale.getTotal()}"></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
           </div>
       </div>
   </div>

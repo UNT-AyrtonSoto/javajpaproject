@@ -31,9 +31,16 @@ public class Sale {
     @Getter@Setter
     private Client client;
 
-    @OneToMany(mappedBy = "sale")
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Getter@Setter
     private Collection<Sale_Detail> items;
+
+    public Sale(Long id, Date saleDate, Seller seller, Client client) {
+        this.id = id;
+        this.saleDate = saleDate;
+        this.seller = seller;
+        this.client = client;
+    }
 
     public Sale(Date saleDate, Seller seller, Client client) {
         this.saleDate = saleDate;

@@ -8,32 +8,43 @@
     <title>Productos</title>
 </head>
 <body>
-  <div layout:fragment="header">Productos</div>
+  <div layout:fragment="header">
+      <h1>Productos</h1>
+  </div>
+  <div layout:fragment="buttons">
+  </div>
   <div layout:fragment="content">
       <div class="row">
           <div class="col-12">
-              <table class="table table-bordered table-striped dataTable" role="grid">
-                  <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Activo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr th:each="product: ${listProducts}">
-                          <td th:text="${product.id}"></td>
-                          <td th:text="${product.name}"></td>
-                          <td th:text="${product.description}"></td>
-                          <td th:text="${product.price}"></td>
-                          <td th:text="${product.stock}"></td>
-                          <td th:text="${product.active}"></td>
-                      </tr>
-                  </tbody>
-              </table>
+              <h3>LISTADO PRODUCTOS</h3>
+          </div>
+          <div class="col-12">
+              <div class="row">
+                  <div class="col-12 px-8">
+                      <table class="table table-bordered table-striped dataTable" role="grid">
+                          <thead>
+                          <tr>
+                              <th>id</th>
+                              <th>Nombre</th>
+                              <th>Descripcion</th>
+                              <th>Precio</th>
+                              <th>Stock</th>
+                              <th>Activo</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr th:each="product: ${listProducts}">
+                              <td th:text="${product.id}"></td>
+                              <td th:text="${product.name}"></td>
+                              <td th:text="${product.description}"></td>
+                              <td th:text="${product.price}"></td>
+                              <td th:text="${product.stock}"></td>
+                              <td th:text="${product.active}"></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
           </div>
       </div>
   </div>

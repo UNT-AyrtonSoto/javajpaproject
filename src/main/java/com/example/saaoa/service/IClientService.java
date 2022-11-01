@@ -11,4 +11,7 @@ public interface IClientService {
     Client findByDni(String dni);
 
     List<Client> listAll();
+
+    void delete(Long id);
+    void delete(Client client);
 }

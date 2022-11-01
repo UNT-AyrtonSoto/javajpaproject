@@ -20,4 +20,22 @@ public class Sale_DetailServiceImpl implements ISale_DetailService{
         );
         return saleDetailRepository.save(sale_detail);
     };
+
+    public Sale_Detail save(Long id, SaleDetailRegistrationDto registrationDto){
+        Sale_Detail sale_detail = new Sale_Detail(
+                id,
+                registrationDto.getSale(),
+                registrationDto.getProduct(),
+                registrationDto.getQuantity()
+        );
+        return saleDetailRepository.save(sale_detail);
+    };
+
+    public void delete(Long id){
+
+        saleDetailRepository.deleteById(id);
+    }
+    public void delete(Sale_Detail sd){
+        saleDetailRepository.delete(sd);
+    }
 }

@@ -36,6 +36,29 @@ public class SaleServiceImpl implements ISaleService{
     }
 
     @Override
+    public Sale save(Long id, SaleRegistrationDto registrationDto){
+        Sale sale = new Sale(
+                id,
+                registrationDto.getDate(),
+                registrationDto.getSeller(),
+                registrationDto.getClient()
+        );
+        return saleRepository.save(sale);
+    }
+
+    @Override
+    public Sale save(Long id,SaleRegistrationDto registrationDto, Collection<Sale_Detail> sale_details){
+        Sale sale = new Sale(
+                id,
+                registrationDto.getDate(),
+                registrationDto.getSeller(),
+                registrationDto.getClient(),
+                sale_details
+        );
+        return saleRepository.save(sale);
+    }
+
+    @Override
     public Sale save(SaleRegistrationDto registrationDto, Collection<Sale_Detail> sale_details){
         Sale sale = new Sale(
                 registrationDto.getDate(),
@@ -49,4 +72,11 @@ public class SaleServiceImpl implements ISaleService{
     public Optional<Sale> getById(Long id){return saleRepository.findById(id);}
 
     public List<Sale> listAll(){return saleRepository.findAll();}
+
+    public void delete(Long id){
+        saleRepository.deleteById(id);
+    }
+    public void delete(Sale sale){
+        saleRepository.delete(sale);
+    }
 }
